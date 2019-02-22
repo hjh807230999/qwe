@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <style>
+    *{margin:0;padding:0;}
+    a{text-decoration:none;}
+    li{list-style:none;}
+      .wrap{
+          width: 658px;
+          height: 500px;
+          margin: 50px auto;
+          user-select: none;
+      }
+    .wrap .img{
+        position: relative;
+        width: 100%;
+        height: 411px;
+    }
+    .wrap .img ul{
+        width: 100%;
+        height: 100%;
+    }
+    .wrap .img ul li{
+        display: none;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+    .wrap .img ul li.show{
+        display: block;
+    }
+    .wrap .img .dec{
+        position: absolute;
+        width: 100%;
+        height: 25px;
+        background-color: rgba(0,0,0,.5);
+        font-size: 14px;
+        line-height: 25px;
+        text-align: center;
+        color:#fff;
+    }
+    .wrap .img .dec1{
+        top:0;
+    }
+    .wrap .img .dec2{
+        bottom:0;
+    }
+    .wrap .img .btn div{
+        position: absolute;
+        top:50%;
+        width: 40px;
+        height: 40px;
+        margin-top: -20px;
+        background-color: rgba(0,0,0,.5);
+        font-size: 20px;
+        line-height: 40px;
+        text-align: center;
+        color:#fff;
+        cursor: pointer;
+    }
+    .wrap .img .btn .left{
+        left:0;
+    }
+    .wrap .img .btn .right{
+        right:0;
+    }
+    .wrap .tab{
+        width: 100%;
+        height: 80px;
+        text-align: center;
+        line-height: 80px;
+    }
+    .wrap .tab p{
+        display: inline-block;
+        width: 100px;
+        height: 40px;
+        background-color: rgba(0,0,0,.5);
+        font-size: 20px;
+        line-height: 40px;
+        text-align: center;
+        color:#fff;
+        cursor: pointer;
+    }
+    .wrap .tab p.active{
+        background-color: #f00;
+    }
+  </style> 
+</head>
+<body>
+    <div class="wrap">
+        <div class="img">
+            <ul>
+                <li class="show"><img src="file/img/1.jpg" alt=""></li>
+                <li><img src="file/img/2.jpg" alt=""></li>
+                <li><img src="file/img/3.jpg" alt=""></li>
+                <li><img src="file/img/4.jpg" alt=""></li>
+                <li><img src="file/img/5.jpg" alt=""></li>
+            </ul>
+            <p class="dec dec1"><span>1</span>/5</p>
+            <p class="dec dec2">第一张图片</p>
+
+            <div class="btn">
+                <div class="left"> < </div>
+                <div class="right"> > </div>
+            </div>
+        </div>
+        <div class="tab">
+            <p class="active">单边切换</p>
+            <p>循环切换</p>
+        </div>
+    </div>
+    <script>
+        let aImg = document.querySelectorAll(".wrap .img ul li"),
+            oDec = document.querySelectorAll(".wrap .img .dec"),
+            oDec1 = oDec[0].getElementsByTagName("span")[0],
+            oDec2 = oDec[1],
+            oBtn = document.querySelectorAll(".wrap .img .btn div"),
+            oTab = document.querySelectorAll(".wrap .tab p"),
+            index = 0,
+            length = aImg.length,
+            bool = true,
+            arrText = [
+                "第一张图片",
+                "第二张图片",
+                "第三张图片",
+                "第四张图片",
+                "第五张图片"
+            ]
+        ;
+        //点击右边切换
+        oBtn[1].onclick = function () {
+            aImg[index].className = "";
+            index++;
+            //判断index切换到最大边停止切换
+            if( index>length-1 ){
+                index = bool?length-1:0;
+            }
+            aImg[index].className = "show";
+            oDec1.innerHTML = index + 1;
+            oDec2.innerHTML = arrText[index];
+        };
+        //点击左边切换
+        oBtn[0].onclick = function () {
+            aImg[index].className = "";
+            index--;
+            //判断index切换到最左边停止切换
+            if( index<0 ){
+                index = bool?0:length-1;
+            }
+            aImg[index].className = "show";
+            oDec1.innerHTML = index + 1;
+            oDec2.innerHTML = arrText[index];
+        };
+        oTab[0].onclick = function () {
+            oTab[0].className = "active";
+            oTab[1].className = "";
+            bool = true;
+        };
+        oTab[1].onclick = function () {
+            oTab[1].className = "active";
+            oTab[0].className = "";
+            bool =false;
+        };
+    </script>
+</body>
+</html>

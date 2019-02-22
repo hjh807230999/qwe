@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <style>
+    *{margin:0;padding:0;}
+    a{text-decoration:none;}
+    li{list-style:none;}
+    #wrap{
+        width: 658px;
+        height: 500px;
+        margin: 50px auto;
+        user-select:none;
+    }
+    #wrap .img{
+        position: relative;
+        width: 100%;
+        height: 411px;
+    }
+    #wrap .img .list{
+        width: 100%;
+        height: 100%;
+    }
+    #wrap .img .list li{
+        display: none;
+        position: absolute;
+        top:0;
+        left:0;
+        width: 100%;
+        height: 100%;
+    }
+    #wrap .img .list li.show{
+        display: block;
+    }
+    #wrap .tab{
+        width: 100%;
+        height: 80px;
+        text-align: center;
+        line-height: 80px;
+    }
+    #wrap .tab p{
+        display: inline-block;
+        width: 100px;
+        height: 40px;
+        background-color: rgba(0,0,0,.5);
+        font-size: 20px;
+        line-height: 40px;
+        text-align: center;
+        color:#fff;
+        cursor:pointer;
+        /*user-select:none;*/
+    }
+    #wrap .tab p.active{
+        background-color: #f00;
+    }
+    #wrap .img .dec{
+        position: absolute;
+        left:0;
+        width: 100%;
+        height: 20px;
+        background-color: rgba(0,0,0,.5);
+        font-size: 14px;
+        color:#fff;
+        line-height: 20px;
+        text-align: center;
+    }
+    #wrap .img .dec1{
+        top:0;
+    }
+    #wrap .img .dec2{
+        bottom:0;
+    }
+    #wrap .img #btn div{
+        position: absolute;
+        top:50%;
+        width: 40px;
+        height: 40px;
+        margin-top: -20px;
+        background-color: rgba(0,0,0,.5);
+        font-size: 14px;
+        color:#fff;
+        line-height: 40px;
+        text-align: center;
+        font-weight: bold;
+        cursor: pointer;
+        /*user-select:none;*/
+    }
+    #wrap .img #btn .left{
+        left: 0;
+    }
+    #wrap .img #btn .right{
+        right: 0;
+    }
+  </style> 
+</head>
+<body>
+    <div id="wrap">
+        <!--图片区域-->
+        <div class="img">
+            <ul class="list">
+                <li class="show"><img src="file/img/1.jpg" alt=""></li>
+                <li><img src="file/img/2.jpg" alt=""></li>
+                <li><img src="file/img/3.jpg" alt=""></li>
+                <li><img src="file/img/4.jpg" alt=""></li>
+                <li><img src="file/img/5.jpg" alt=""></li>
+            </ul>
+            <!--两个描述标签-->
+            <p class="dec dec1"><span>1</span>/5</p>
+            <p class="dec dec2">这是第一张图片！</p>
+            <!--两个切换-->
+            <div id="btn">
+                <div class="left"> < </div>
+                <div class="right"> > </div>
+            </div>
+        </div>
+
+        <!--按钮区域-->
+        <div class="tab">
+            <p class="active">单边切换</p>
+            <p>循环切换</p>
+        </div>
+    </div>
+    <script>
+        let aImg = document.querySelectorAll("#wrap .img .list li"),
+            aDec = document.querySelectorAll("#wrap .img .dec"),
+            oDec1 = aDec[0].getElementsByTagName("span"),
+            oDec2 = aDec[1],
+            aBtn = document.querySelectorAll("#btn div"),
+            aTab = document.querySelectorAll("#wrap .tab p"),
+            index = 0,
+            bool = true,
+            length = aImg.length,
+            arrText = [
+                "这是第一张图片",
+                "这是第二张图片",
+                "这是第三张图片",
+                "这是第四张图片",
+                "这是第五张图片"
+            ]
+        ;
+        //点击右边切换
+        aBtn[1].onclick = function () {
+            aImg[index].className = "";
+
+            index++;
+            if( index > length-1 ){
+                index = bool?length-1:0;
+            }
+
+            aImg[index].className = "show";
+            oDec1[0].innerHTML = index + 1;
+            oDec2.innerHTML = arrText[index];
+        };
+        // 点击左边切换
+        aBtn[0].onclick = function () {
+            aImg[index].className = "";
+            index--;
+            if( index < 0 ){
+                index = bool?0:length-1;
+            }
+            aImg[index].className = "show";
+            oDec1[0].innerHTML = index + 1;
+            oDec2.innerHTML = arrText[index];
+        };
+        //单边切换
+        aTab[0].onclick = function () {
+            aTab[0].className = "active";
+            aTab[1].className = "";
+            bool = true;
+        };
+        //循环切换
+        aTab[1].onclick = function () {
+            aTab[1].className = "active";
+            aTab[0].className = "";
+            bool = false;
+        };
+    </script>
+</body>
+</html>
